@@ -4,7 +4,6 @@ import java.awt.*;
 
 Capture video;
 OpenCV opencv;
-float tileDepth = 15;
 
 void setup () {
   int screenWidth = 640;
@@ -14,34 +13,32 @@ void setup () {
   opencv = new OpenCV(this, screenWidth, screenHeight);
   opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);
   video.start();
-//  blendMode(SUBTRACT);
 }
 
-void draw() {
+void draw () {
   if (video.available() == true) {
     video.read();
     opencv.loadImage(video);
     image(video, 0, 0);
 
+    noFill();
+    stroke(255, 0, 0);
     Rectangle[] faces = opencv.detect();
-    copyFaces(faces, tileDepth);
+    drawBoxesAround(faces);
   }
 }
 
-void copyFaces (Rectangle[] faces, float depth) {
-  for (float i = depth; i > 0; i--) {
-    for (int j = 0; j < faces.length; j++) {
-      Rectangle face = faces[j];
-      float scale = i / depth;
-      copyFace(face, scale);
-    }
+void drawBoxesAround (Rectangle[] faces) {
+  for (int i = 0; i < faces.length; i++) {
+    Rectangle face = faces[i];
+    drawBoxAround(face);
   }
 }
 
-void copyFace (Rectangle face, float scale) {
-  int scaledFaceWidth = (int)(scale * face.width);
-  int scaledFaceHeight = (int)(scale * face.height);
-  int newX = face.x + (face.width - scaledFaceWidth) / 2;
-  int newY = face.y + (face.height - scaledFaceHeight) / 2;
-  copy(video.get(), face.x, face.y, face.width, face.height, newX, newY, scaledFaceWidth, scaledFaceHeight);
+void drawBoxAround (Rectangle face) {
+  int x = face.x;
+  int y = face.y;
+  int w = face.width;
+  int h = face.height;
+  rect(x, y, w, h);
 }
