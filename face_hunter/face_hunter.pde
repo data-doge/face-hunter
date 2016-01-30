@@ -41,7 +41,7 @@ void captureFaces (Rectangle[] faces) {
 
 void captureFace (Rectangle face) {
   PImage faceImage = get(face.x, face.y, face.width, face.height);
-  faceImage.save("face-" + counter + ".jpg");
+  faceImage.save("./captures/face-" + counter + ".jpg");
   counter++;
 }
 
@@ -55,3 +55,4 @@ void drawBoxesAround (Rectangle[] faces) {
 void drawBoxAround (Rectangle face) {
   rect(face.x, face.y, face.width, face.height);
 }
+
