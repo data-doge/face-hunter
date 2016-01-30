@@ -5,6 +5,8 @@ import java.awt.*;
 Capture video;
 OpenCV opencv;
 
+int counter = 0;
+
 void setup () {
   int screenWidth = 640;
   int screenHeight = 480;
@@ -20,12 +22,27 @@ void draw () {
     video.read();
     opencv.loadImage(video);
     image(video, 0, 0);
-
-    noFill();
-    stroke(255, 0, 0);
-    Rectangle[] faces = opencv.detect();
-    drawBoxesAround(faces);
   }
+}
+
+void mousePressed () {
+  noFill();
+  stroke(255, 0, 0);
+  Rectangle[] faces = opencv.detect();
+  captureFaces(faces);
+}
+
+void captureFaces (Rectangle[] faces) {
+  for (int i = 0; i < faces.length; i++) {
+    Rectangle face = faces[i];
+    captureFace(face);
+  }
+}
+
+void captureFace (Rectangle face) {
+  PImage faceImage = get(face.x, face.y, face.width, face.height);
+  faceImage.save("face-" + counter + ".jpg");
+  counter++;
 }
 
 void drawBoxesAround (Rectangle[] faces) {
@@ -38,4 +55,3 @@ void drawBoxesAround (Rectangle[] faces) {
 void drawBoxAround (Rectangle face) {
   rect(face.x, face.y, face.width, face.height);
 }
-
