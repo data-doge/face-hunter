@@ -36,9 +36,6 @@ void drawBoxesAround (Rectangle[] faces) {
 }
 
 void drawBoxAround (Rectangle face) {
-  int x = face.x;
-  int y = face.y;
-  int w = face.width;
-  int h = face.height;
-  rect(x, y, w, h);
+  rect(face.x, face.y, face.width, face.height);
 }
+
