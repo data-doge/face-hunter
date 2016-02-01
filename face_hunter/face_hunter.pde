@@ -39,17 +39,3 @@ void captureFace (Rectangle face) {
   faceImage.save("./captures/face-" + counter + ".jpg");
   counter++;
 }
-
- void drawBoxesAround (Rectangle[] faces) {
-   for (int i = 0; i < faces.length; i++) {
-     Rectangle face = faces[i];
-     drawBoxAround(face);
-   }
- }
-
- void drawBoxAround (Rectangle face) {
-   noFill();
-   stroke(255, 0, 0);
-   strokeWeight(5);
-   rect(face.x, face.y, face.width, face.height);
- }
